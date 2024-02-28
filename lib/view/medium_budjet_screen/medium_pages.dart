@@ -2,38 +2,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+import 'package:royalcars/controller/add_car_provider.dart';
+import 'package:royalcars/controller/cred_provider.dart';
+import 'package:royalcars/controller/medium_controller/search_provider.dart';
 import 'package:royalcars/service/function.dart';
 
 import 'package:royalcars/view/medium_budjet_screen/medium_edit.dart';
 import 'package:royalcars/view/medium_budjet_screen/view_medium_screen.dart';
 import '../../model/mediumcar/medium_cars_model.dart';
-import '../add_screen.dart';
 
-class Midiumcars extends StatefulWidget {
-  const Midiumcars({Key? key}) : super(key: key);
-
+class Midiumcars extends StatelessWidget {
   @override
-  State<Midiumcars> createState() => _MidiumcarsState();
-}
-class _MidiumcarsState extends State<Midiumcars> {
-  @override
-  void initState() {
-    super.initState();
-    searchListUpdatem();
-  }
- String searchm = "";
-  List<MediumCarsModel> searchedListm = [];
-void searchListUpdatem() {
-    getAllCars(DataBases.MediumDb);
-    searchedListm = carsMediumListNotifier.value
-        .where((
-        MediumCarsModel) =>
-            MediumCarsModel.name.toLowerCase().contains(searchm.toLowerCase()))
-        .toList();
-  }
- @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    Provider.value(value: getAllCars(DataBases.MediumDb));
+
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: SizedBox(
@@ -45,29 +29,30 @@ void searchListUpdatem() {
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(10)),
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              onChanged: (value) {
-                setState(() {
-                  searchm = value;
-                  searchListUpdatem();
-                });
-              },
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  hintText: 'Search here Medium cars',
-                  hintStyle: TextStyle(color: Colors.white),
-                  border: InputBorder.none),
-            ),
+            child: Consumer<mediumCarsProvider>(
+                builder: (context, provider, child) {
+              return TextFormField(
+                style: const TextStyle(color: Colors.white),
+                onChanged: (value) {
+                  provider.updateSearchedList(value);
+                },
+                decoration: const InputDecoration(
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    hintText: 'Search here Medium cars',
+                    hintStyle: TextStyle(color: Colors.white),
+                    border: InputBorder.none),
+              );
+            }),
           ),
         ),
         actions: [
           IconButton(
               onPressed: () {
-                searchListUpdatem();
+                Provider.of<mediumCarsProvider>(context, listen: false)
+                    .updateSearchedList(''); // Refresh the search list
               },
               icon: const Icon(Icons.refresh)),
         ],
@@ -75,31 +60,33 @@ void searchListUpdatem() {
       body: Column(
         children: [
           Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: carsMediumListNotifier,
-              builder: (BuildContext ctx, List<MediumCarsModel> carLLIst,
-                  Widget? child) {
-                return searchm.isNotEmpty
-                    ? searchedListm.isEmpty
-                        ? ListView(
-                            children: [
-                              Lottie.asset(
-                                  'assets/Animation - 1707811402766.json'),
-                            ],
-                          )
-                        : buildCArList(searchedListm)
-                    : buildCArList(carLLIst);
-              },
-            ),
+            child: Consumer<mediumCarsProvider>(
+                builder: (context, provider, child) {
+              final searchedListm = provider.searchedList;
+              final carLLIst = carsMediumListNotifier;
+              return provider.search.isNotEmpty
+                  ? searchedListm.isEmpty
+                      ? ListView(
+                          children: [
+                            Lottie.asset(
+                                'assets/Animation - 1707811402766.json'),
+                          ],
+                        )
+                      : buildCArList(searchedListm)
+                  : buildCArList(carLLIst);
+            }),
           ),
-          Text(
-            'Total Medium Cars Found: ${searchedListm.length}',
-          ),
+          Consumer<mediumCarsProvider>(builder: (context, provider, child) {
+            return Text(
+              'Total Medium Cars Found: ${provider.searchedList.length}',
+            );
+          }),
         ],
       ),
     );
   }
- Widget buildCArList(List<MediumCarsModel> carsList) {
+
+  Widget buildCArList(List<MediumCarsModel> carsList) {
     return carsList.isEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -190,14 +177,23 @@ void searchListUpdatem() {
                                               },
                                               child: const Text('Cancel'),
                                             ),
-                                            TextButton(
-                                              onPressed: () {
-                                                deleteCar(
-                                                    DataBases.MediumDb, index);
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Delete'),
-                                            ),
+                                            Consumer<CredProvider>(builder:
+                                                (context, value, child) {
+                                              return TextButton(
+                                                onPressed: () {
+                                                  value.deletFu(
+                                                      DataBases.MediumDb,
+                                                      index);
+                                                  Provider.of<mediumCarsProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .updateSearchedList('');
+
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Delete'),
+                                              );
+                                            }),
                                           ],
                                         );
                                       },
@@ -226,7 +222,7 @@ void searchListUpdatem() {
                                                   )));
                                     },
                                     icon: const Icon(Icons.edit_document)),
-                          ],
+                              ],
                             )
                           ],
                         ),
@@ -251,5 +247,6 @@ void searchListUpdatem() {
             },
           );
   }
- List<int> sumofMedium = [];
+
+  List<int> sumofMedium = [];
 }

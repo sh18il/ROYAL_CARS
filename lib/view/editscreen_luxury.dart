@@ -1,28 +1,26 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:royalcars/service/function.dart';
+import 'package:provider/provider.dart';
+import 'package:royalcars/controller/luxury_controller/edit_luxury_provider.dart';
 import 'package:royalcars/model/luxurycar/cars_model.dart';
-
+import 'package:royalcars/service/function.dart';
 import 'package:royalcars/view/widgets/editpage.dart';
 
-import 'add_screen.dart';
+class EditLuxury extends StatelessWidget {
+  final String name;
+  final String model;
+  final String km;
+  final int index;
+  final String dlnbr;
+  final String owner;
+  final String price;
+  final String future;
+  final dynamic imagepath;
 
-// ignore: must_be_immutable
-class EditLuxury extends StatefulWidget {
-  String name;
-  String model;
-  String km;
-  int index;
-  String dlnbr;
-  String owner;
-  String price;
-  String future;
-  dynamic imagepath;
-  EditLuxury({
-    super.key,
+  const EditLuxury({
+    Key? key,
     required this.name,
     required this.model,
     required this.km,
@@ -32,47 +30,23 @@ class EditLuxury extends StatefulWidget {
     required this.price,
     required this.future,
     required this.imagepath,
-  });
-
-  @override
-  State<EditLuxury> createState() => _EditLuxuryState();
-}
-
-class _EditLuxuryState extends State<EditLuxury> {
-  TextEditingController nameContrl = TextEditingController();
-  TextEditingController modelContrl = TextEditingController();
-  TextEditingController kmContrl = TextEditingController();
-  TextEditingController dlNumberContrl = TextEditingController();
-  TextEditingController ownerContrl = TextEditingController();
-  TextEditingController priceContrl = TextEditingController();
-  TextEditingController futureContrl = TextEditingController();
-
-  File? _selectImage;
-
-  @override
-  void initState() {
-    nameContrl = TextEditingController(text: widget.name);
-    modelContrl = TextEditingController(text: widget.model);
-    kmContrl = TextEditingController(text: widget.km);
-    dlNumberContrl = TextEditingController(text: widget.dlnbr);
-    ownerContrl = TextEditingController(text: widget.owner);
-    priceContrl = TextEditingController(text: widget.price);
-    futureContrl = TextEditingController(text: widget.future);
-    _selectImage = widget.imagepath != '' ? File(widget.imagepath) : null;
-    super.initState();
-  }
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<EditLuxuryProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
         title: const Center(
-          child: Text("EDIT CARS",
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w400,
-              )),
+          child: Text(
+            "EDIT CARS",
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
         ),
       ),
       body: SafeArea(
@@ -83,9 +57,9 @@ class _EditLuxuryState extends State<EditLuxury> {
               Center(
                 child: SizedBox(
                   height: 200,
-                  child: Image(
-                    image: _selectImage != null
-                        ? FileImage(_selectImage!)
+                  child:  Image(
+                    image: provider.selectImage != null
+                        ? FileImage(provider.selectImage!)
                         : const AssetImage("image/carr1.png") as ImageProvider,
                   ),
                 ),
@@ -96,23 +70,21 @@ class _EditLuxuryState extends State<EditLuxury> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 161, 133, 168)),
-                      onPressed: () {
-                        _pickImgGallery();
-                      },
-                      icon: const Icon(Icons.image),
-                      label: const Text("GALLERY")),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 161, 133, 168),
+                    ),
+                    onPressed: provider.pickImgGallery,
+                    icon: const Icon(Icons.image),
+                    label: const Text("GALLERY"),
+                  ),
                   ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 184, 151, 192)),
-                      onPressed: () {
-                        _pickImageFromCam();
-                      },
-                      icon: const Icon(Icons.camera_alt),
-                      label: const Text("CAMERA")),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 184, 151, 192),
+                    ),
+                    onPressed: provider.pickImageFromCam,
+                    icon: const Icon(Icons.camera_alt),
+                    label: const Text("CAMERA"),
+                  ),
                 ],
               ),
               const Gap(30),
@@ -121,18 +93,28 @@ class _EditLuxuryState extends State<EditLuxury> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      FormFieldBuild(controller: nameContrl, hintText: 'NAME'),
                       FormFieldBuild(
-                          controller: modelContrl, hintText: 'MODEL'),
+                        controller: provider.nameContrl..text = name,
+                        hintText: 'NAME',
+                      ),
+                      FormFieldBuild(
+                        controller: provider.modelContrl..text = model,
+                        hintText: 'MODEL',
+                      ),
                     ],
                   ),
                   const Gap(7),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      FormFieldBuild(controller: kmContrl, hintText: 'KM'),
                       FormFieldBuild(
-                          controller: dlNumberContrl, hintText: 'DL NUMBER'),
+                        controller: provider.kmContrl..text = km,
+                        hintText: 'KM',
+                      ),
+                      FormFieldBuild(
+                        controller: provider.dlNumberContrl..text = dlnbr,
+                        hintText: 'DL NUMBER',
+                      ),
                     ],
                   ),
                   const Gap(7),
@@ -140,84 +122,45 @@ class _EditLuxuryState extends State<EditLuxury> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       FormFieldBuild(
-                          controller: ownerContrl, hintText: 'OWNERSHIP'),
+                        controller: provider.ownerContrl..text = owner,
+                        hintText: 'OWNERSHIP',
+                      ),
                       FormFieldBuild(
-                          controller: priceContrl, hintText: 'PRICE'),
+                        controller: provider.priceContrl..text = price,
+                        hintText: 'PRICE',
+                      ),
                     ],
                   ),
                   const Gap(7),
-                  FormFieldBuild(controller: futureContrl, hintText: 'FUETERS'),
+                  FormFieldBuild(
+                    controller: provider.futureContrl..text = future,
+                    hintText: 'FUETERS',
+                  ),
                 ],
               ),
               const Gap(30),
               ElevatedButton(
-                  onPressed: () {
-                    updateAll();
-                    Navigator.pop(context);
-                  },
-                  child: const Text('SUBMIT'))
+                onPressed: () {
+                 provider.updateAll(
+  name: name,
+  model: model,
+  km: km,
+  dlnbr: dlnbr,
+  owner: owner,
+  price: price,
+  future: future,
+  imagepath: imagepath,
+  index: index,
+);
+
+                  Navigator.pop(context);
+                },
+                child: const Text('SUBMIT'),
+              )
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<void> updateAll() async {
-    final namelx = nameContrl.text;
-    final modellx = modelContrl.text;
-    final kmlx = kmContrl.text;
-    final dlnbrlx = dlNumberContrl.text;
-    final ownerlx = ownerContrl.text;
-    final pricelx = priceContrl.text;
-    final futurelx = futureContrl.text;
-    final imagelx = _selectImage!.path;
-
-    if (namelx.isEmpty ||
-        modellx.isEmpty ||
-        kmlx.isEmpty ||
-        dlnbrlx.isEmpty ||
-        ownerlx.isEmpty ||
-        pricelx.isEmpty ||
-        futurelx.isEmpty ||
-        imagelx.isEmpty) {
-      return;
-    } else {
-      final update = CarsModel(
-          name: namelx,
-          model: modellx,
-          km: kmlx,
-          dlnumber: dlnbrlx,
-          owner: ownerlx,
-          price: pricelx,
-          future: futurelx,
-          image: imagelx);
-      editCar(DataBases.LuxuryDb, widget.index, update);
-    }
-  }
-
-  Future _pickImgGallery() async {
-    final returnImg =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (returnImg == null) {
-      return;
-    }
-    setState(() {
-      _selectImage = File(returnImg.path);
-    });
-  }
-
-  _pickImageFromCam() async {
-    final returnImage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-
-    if (returnImage == null) {
-      return;
-    }
-
-    setState(() {
-      _selectImage = File(returnImage.path);
-    });
   }
 }

@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:royalcars/service/function.dart';
+import 'package:royalcars/view/add_screen.dart';
 
 import 'package:royalcars/view/low_cars_pages/low_cars.dart';
 import 'package:royalcars/view/luxuryscreen/luxury_cars_pages.dart';
 import 'package:royalcars/view/medium_budjet_screen/medium_pages.dart';
 
+
+
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   getAllCars(DataBases.LuxuryDb);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LuxurycarsScreen()));
+                      builder: (context) => LuxurycarsScreen()));
                 },
                 child: Container(
                   height: 220,
@@ -62,7 +71,7 @@ class HomeScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Midiumcars()));
+                      builder: (context) =>  Midiumcars()));
                 },
                 child: Container(
                   height: 220,
@@ -99,7 +108,7 @@ class HomeScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const LowCars()));
+                      MaterialPageRoute(builder: (context) =>  LowCars()));
                 },
                 child: Container(
                   height: 220,

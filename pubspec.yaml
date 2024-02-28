@@ -34,8 +34,6 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   flutter:
     sdk: flutter
-  
-  pie_chart: ^5.4.0
   gap: ^3.0.1
   gradient_borders: ^1.0.0
   hive: ^2.2.3
@@ -43,14 +41,16 @@ dependencies:
   hive_generator: ^2.0.1
   image_picker: ^1.0.7
   lottie: ^2.7.0
+  pie_chart: ^5.4.0
+  provider: ^6.1.1
   shared_preferences: ^2.2.2
 
 dev_dependencies:
+
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-
-  flutter_launcher_icons: ^0.13.1
 
 flutter_launcher_icons:
   android: "launcher_icon"

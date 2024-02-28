@@ -2,6 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+import 'package:royalcars/controller/add_car_provider.dart';
+import 'package:royalcars/controller/cred_provider.dart';
+import 'package:royalcars/controller/low_controller/search_provider.dart';
 import 'package:royalcars/model/lowcar/low_cars_model.dart';
 
 import 'package:royalcars/view/low_cars_pages/edit_low_cars.dart';
@@ -9,34 +13,12 @@ import 'package:royalcars/view/low_cars_pages/view_low_cars.dart';
 import '../../service/function.dart';
 import '../add_screen.dart';
 
-class LowCars extends StatefulWidget {
-  const LowCars({super.key});
-
-  @override
-  State<LowCars> createState() => _LowCarsState();
-}
-
-class _LowCarsState extends State<LowCars> {
-  @override
-  void initState() {
-    super.initState();
-    searchListUpdate();
-  }
-
-  String search = "";
-  List<LowCarsModel> searchedList = [];
-  void searchListUpdate() {
-    getAllCars(DataBases.LowDb);
-    searchedList = carsLowListNotifier.value
-        .where(
-          (LowCarsModel) =>
-              LowCarsModel.name.toLowerCase().contains(search.toLowerCase()),
-        )
-        .toList();
-  }
+class LowCars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.value(value: getAllCars(DataBases.LowDb));
+  
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -49,54 +31,59 @@ class _LowCarsState extends State<LowCars> {
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(10)),
-            child: TextFormField(
-              style: const TextStyle(color: Colors.white),
-              onChanged: (value) {
-                setState(() {
-                  search = value;
-                  searchListUpdate();
-                });
-              },
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  hintText: 'Search here.. LoW cars',
-                  hintStyle: TextStyle(color: Colors.white),
-                  border: InputBorder.none),
-            ),
+            child:
+                Consumer<LowCarsProvider>(builder: (context, provider, child) {
+              return TextFormField(
+                style: const TextStyle(color: Colors.white),
+                onChanged: (value) {
+                  provider.updateSearchedList(value);
+                },
+                decoration: const InputDecoration(
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    hintText: 'Search here.. LoW cars',
+                    hintStyle: TextStyle(color: Colors.white),
+                    border: InputBorder.none),
+              );
+            }),
           ),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.refresh)),
+          IconButton(onPressed: () {
+             Provider.of<LowCarsProvider>(context, listen: false)
+                  .updateSearchedList(''); // Refresh the search list
+        
+          }, icon: const Icon(Icons.refresh)),
         ],
       ),
       body: Column(
         children: [
           Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: carsLowListNotifier,
-              builder: (BuildContext ctx, List<LowCarsModel> carLLIst,
-                  Widget? child) {
-                return search.isNotEmpty
-                    ? searchedList.isEmpty
-                        ? ListView(
-                            children: [
-                              Center(
-                                child: Lottie.asset(
-                                    'assets/Animation - 1707811402766.json'),
-                              ),
-                            ],
-                          )
-                        : LowCars_Build(searchedList)
-                    : LowCars_Build(carLLIst);
-              },
-            ),
+            child:
+                Consumer<LowCarsProvider>(builder: (context, provider, child) {
+              final carLLIst = carsLowListNotifier;
+              final searchedList = provider.searchedList;
+              return provider.search.isNotEmpty
+                  ? searchedList.isEmpty
+                      ? ListView(
+                          children: [
+                            Center(
+                              child: Lottie.asset(
+                                  'assets/Animation - 1707811402766.json'),
+                            ),
+                          ],
+                        )
+                      : LowCars_Build(searchedList)
+                  : LowCars_Build(carLLIst);
+            }),
           ),
-          Text(
-            'Total Low Cars Found: ${carsLowListNotifier.value.length}',
-          ),
+          Consumer<LowCarsProvider>(builder: (context, provider, child) {
+            return Text(
+              'Total Low Cars Found: ${provider.searchedList.length}',
+            );
+          }),
         ],
       ),
     );
@@ -195,14 +182,23 @@ class _LowCarsState extends State<LowCars> {
                                               },
                                               child: const Text('Cancel'),
                                             ),
-                                            TextButton(
-                                              onPressed: () {
-                                                deleteCar(
-                                                    DataBases.LowDb, index);
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Delete'),
-                                            ),
+                                            Consumer<CredProvider>(builder:
+                                                (context, value, child) {
+                                              return TextButton(
+                                                onPressed: () {
+                                                  value.deletFu(
+                                                      DataBases.LowDb, index);
+                                                  Provider.of<LowCarsProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .updateSearchedList(
+                                                          ''); //
+
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Delete'),
+                                              );
+                                            }),
                                           ],
                                         );
                                       },

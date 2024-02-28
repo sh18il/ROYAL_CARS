@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
- part 'cars_model.g.dart';
-
+part 'cars_model.g.dart';
 
 @HiveType(typeId: 1)
 class CarsModel {
@@ -20,17 +19,16 @@ class CarsModel {
   final String price;
   @HiveField(7)
   final String future;
-   @HiveField(8)
-   final String? image;
+  @HiveField(8)
+  final dynamic image;
 
-  CarsModel( {
-    required this.name,
-    required this.model,
-    required this.km,
-    required this.dlnumber,
-    required this.owner,
-    required this.price,
-    required this.future,
-    this.image
-  });
+  CarsModel(
+      {required this.name,
+      required this.model,
+      required this.km,
+      required this.dlnumber,
+      required this.owner,
+      required this.price,
+      required this.future,
+      this.image});
 }

@@ -18,10 +18,10 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int currentIndex = 0;
   final screens = [
-    const HomeScreen(),
-    const AddScrees(),
+     HomeScreen(),
+     AddScrees(),
     const ChartScreen(),
-    const Settings(),
+     Settings(),
   ];
 
   @override
@@ -58,4 +58,5 @@ class _BottomNavState extends State<BottomNav> {
       ),
     );
   }
+  
 }

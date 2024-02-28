@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:royalcars/controller/add_car_provider.dart';
 import 'package:royalcars/model/luxurycar/cars_model.dart';
 import 'package:royalcars/model/mediumcar/medium_cars_model.dart';
 import 'package:royalcars/model/lowcar/low_cars_model.dart';
 import 'package:royalcars/view/add_screen.dart';
-
-ValueNotifier<List<CarsModel>> carsListNotifier = ValueNotifier([]);
-ValueNotifier<List<LowCarsModel>> carsLowListNotifier = ValueNotifier([]);
-ValueNotifier<List<MediumCarsModel>> carsMediumListNotifier = ValueNotifier([]);
+List<CarsModel> carsListNotifier =[];
+List<LowCarsModel> carsLowListNotifier =[];
+List<MediumCarsModel> carsMediumListNotifier = [];
 
 Future<void> addCar(DataBases type, value) async {
   final box = await _boxForType(type);
@@ -20,14 +20,20 @@ Future<void> getAllCars(DataBases type) async {
   final box = await _boxForType(type);
   _clearNotifierList(type);
   _addAllToList(type, box.values.toList());
+
+  
+  
 }
 
 Future<void> deleteCar(DataBases type, int index) async {
   final box = await _boxForType(type);
   await box.deleteAt(index);
 
+  // Notify listeners after deletion
   getAllCars(type);
 }
+
+
 
 Future<void> editCar(DataBases type, int index, dynamic value) async {
   final box = await _boxForType(type);
@@ -50,16 +56,16 @@ Future<Box<dynamic>> _boxForType(DataBases type) async {
 void _clearNotifierList(DataBases type) {
   switch (type) {
     case DataBases.LowDb:
-      carsLowListNotifier.value.clear();
-      carsLowListNotifier.notifyListeners();
+      carsLowListNotifier.clear();
+      // carsLowListNotifier.notifyListeners();
       break;
     case DataBases.MediumDb:
-      carsMediumListNotifier.value.clear();
-      carsMediumListNotifier.notifyListeners();
+      carsMediumListNotifier.clear();
+      // carsMediumListNotifier.notifyListeners();
       break;
     case DataBases.LuxuryDb:
-      carsListNotifier.value.clear();
-      carsListNotifier.notifyListeners();
+      carsListNotifier.clear();
+    //  carsListNotifier.notifyListeners();
       break;
   }
 }
@@ -67,16 +73,16 @@ void _clearNotifierList(DataBases type) {
 void _addAllToList(DataBases type, List<dynamic> values) {
   switch (type) {
     case DataBases.LowDb:
-      carsLowListNotifier.value.addAll(values.cast<LowCarsModel>());
-      carsLowListNotifier.notifyListeners();
+      carsLowListNotifier.addAll(values.cast<LowCarsModel>());
+      // carsLowListNotifier.notifyListeners();
       break;
     case DataBases.MediumDb:
-      carsMediumListNotifier.value.addAll(values.cast<MediumCarsModel>());
-      carsMediumListNotifier.notifyListeners();
+      carsMediumListNotifier.addAll(values.cast<MediumCarsModel>());
+      // carsMediumListNotifier.notifyListeners();
       break;
     case DataBases.LuxuryDb:
-      carsListNotifier.value.addAll(values.cast<CarsModel>());
-      carsListNotifier.notifyListeners();
+      carsListNotifier.addAll(values.cast<CarsModel>());
+     // carsListNotifier.notifyListeners();
       break;
   }
 }

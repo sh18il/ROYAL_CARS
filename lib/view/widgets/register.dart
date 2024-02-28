@@ -6,16 +6,13 @@ import 'sign_in.dart';
 const SAVE_KEY = 'usrLogedin';
 
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+   RegisterScreen({super.key});
 
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
   final usernameCntr = TextEditingController();
+
   final passwordCntr = TextEditingController();
+
   final _SINGUPkey = GlobalKey<FormState>();
 
   @override

@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
 
     Navigator.of(context).pushReplacement(
-        (MaterialPageRoute(builder: (ctx) => const RegisterScreen())));
+        (MaterialPageRoute(builder: (ctx) =>  RegisterScreen())));
   }
 
   Future<void> checkUserlLogin() async {
