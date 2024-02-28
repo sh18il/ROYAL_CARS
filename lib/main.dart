@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:royalcars/controller/add_car_provider.dart';
+import 'package:royalcars/controller/bottomnav_provider.dart';
+import 'package:royalcars/controller/chart_provider.dart';
 import 'package:royalcars/controller/cred_provider.dart';
 import 'package:royalcars/controller/low_controller/edit_low_provider.dart';
 import 'package:royalcars/controller/low_controller/search_provider.dart';
@@ -64,6 +66,12 @@ class MyApp extends StatelessWidget {
         ),
           ChangeNotifierProvider(
           create: (context) => EditLowProvider(),
+        ),
+          ChangeNotifierProvider(
+          create: (context) => ChartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BottomNavProvider(),
         ),
       ],
       child: MaterialApp(

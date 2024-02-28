@@ -20,7 +20,7 @@ class AddCarProvider extends ChangeNotifier {
   final futureContrl = TextEditingController();
   DataBases selectedDatabase = DataBases.LuxuryDb;
   File? selectedImage;
- 
+
   Future<void> onAddCarsButn() async {
     if (selectedDatabase == DataBases.LuxuryDb) {
       final name = nameContrl.text;
@@ -94,7 +94,7 @@ class AddCarProvider extends ChangeNotifier {
       if (name.isEmpty ||
           model.isEmpty ||
           km.isEmpty ||
-         dlnbr.isEmpty ||
+          dlnbr.isEmpty ||
           owner.isEmpty ||
           price.isEmpty ||
           future.isEmpty) {
@@ -131,5 +131,20 @@ class AddCarProvider extends ChangeNotifier {
   selectDb(value) {
     selectedDatabase = value!;
     notifyListeners();
+  }
+
+  Clear() {
+    nameContrl.clear();
+
+    modelContrl.clear();
+
+    kmContrl.clear();
+
+    dlNumberContrl.clear();
+    ownerContrl.clear();
+
+    priceContrl.clear();
+
+    futureContrl.clear();
   }
 }

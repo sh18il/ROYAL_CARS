@@ -275,7 +275,7 @@ import 'package:royalcars/model/luxurycar/cars_model.dart';
 import 'package:royalcars/service/function.dart';
 import 'package:royalcars/view/luxuryscreen/view_luxuy_screen.dart';
 import '../add_screen.dart';
-import '../editscreen_luxury.dart';
+import 'editscreen_luxury.dart';
 
 class LuxurycarsScreen extends StatelessWidget {
   @override
@@ -372,6 +372,11 @@ class LuxurycarsScreen extends StatelessWidget {
             itemCount: carsList.length,
             itemBuilder: (context, index) {
               CarsModel car = carsList[index];
+               sumofLuxury.add(int.tryParse(car.price)!.toInt());
+              double totalmedium = sumofLuxury
+                  .reduce((value, element) => value + element)
+                  .toDouble();
+              Chartfucntion.totals = totalmedium;
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
@@ -522,4 +527,5 @@ class LuxurycarsScreen extends StatelessWidget {
             },
           );
   }
+   List<int> sumofLuxury = [];
 }

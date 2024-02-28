@@ -183,6 +183,7 @@ class AddScrees extends StatelessWidget {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           provider.onAddCarsButn();
+                          provider.Clear();
                         }
                       },
                       child: const Text('SUBMIT'),
