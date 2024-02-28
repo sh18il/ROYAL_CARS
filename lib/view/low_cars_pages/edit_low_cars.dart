@@ -1,28 +1,25 @@
-import 'dart:io';
+
+
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:royalcars/controller/add_car_provider.dart';
-import 'package:royalcars/service/function.dart';
-import 'package:royalcars/model/lowcar/low_cars_model.dart';
+import 'package:provider/provider.dart';
+import 'package:royalcars/controller/low_controller/edit_low_provider.dart';
+import 'package:royalcars/view/widgets/editpage.dart';
 
-import '../widgets/editpage.dart';
-import '../add_screen.dart';
-
-class EditLowCarScreen extends StatefulWidget {
-  final String name;
-  final String model;
-  final String km;
-  final int index;
-  final String dlnbr;
-  final String owner;
-  final String price;
-  final String future;
-  final dynamic imagepath;
-
-  const EditLowCarScreen({
-    Key? key,
+// ignore: must_be_immutablemj
+class EditLowCarScreen extends StatelessWidget {
+  String name;
+  String model;
+  String km;
+  int index;
+  String dlnbr;
+  String owner;
+  String price;
+  String future;
+  dynamic imagepath;
+  EditLowCarScreen({
+    super.key,
     required this.name,
     required this.model,
     required this.km,
@@ -32,36 +29,7 @@ class EditLowCarScreen extends StatefulWidget {
     required this.price,
     required this.future,
     required this.imagepath,
-  }) : super(key: key);
-
-  @override
-  State<EditLowCarScreen> createState() => _EditLowCarScreenState();
-}
-
-class _EditLowCarScreenState extends State<EditLowCarScreen> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController modelController = TextEditingController();
-  final TextEditingController kmController = TextEditingController();
-  final TextEditingController dlNumberController = TextEditingController();
-  final TextEditingController ownerController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController futureController = TextEditingController();
-
-  File? _selectedImage;
-
-  @override
-  void initState() {
-    super.initState();
-    nameController.text = widget.name;
-    modelController.text = widget.model;
-    kmController.text = widget.km;
-    dlNumberController.text = widget.dlnbr;
-    ownerController.text = widget.owner;
-    priceController.text = widget.price;
-    futureController.text = widget.future;
-    _selectedImage =
-        widget.imagepath.isNotEmpty ? File(widget.imagepath) : null;
-  }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -69,171 +37,122 @@ class _EditLowCarScreenState extends State<EditLowCarScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black87,
         title: const Center(
-          child: Text(
-            "EDIT CARS",
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w400,
+          child: Text("EDIT CARS",
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w400,
+              )),
+        ),
+      ),
+      body: Consumer<EditLowProvider>(builder: (context, provider, child) {
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Gap(20),
+                Center(
+                  child: SizedBox(
+                    width: 200,
+                    height: 200,
+                    child: CircleAvatar(
+                      backgroundColor: const Color.fromARGB(255, 25, 25, 81),
+                      backgroundImage: provider.selectImage != null
+                          ? FileImage(provider.selectImage!)
+                          : const AssetImage("image/rolss.png")
+                              as ImageProvider,
+                    ),
+                  ),
+                ),
+                const Gap(20),
+                const Text('EDIT CAR PHOTO'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 161, 133, 168)),
+                        onPressed: () {
+                          provider.pickImgGallery();
+                        },
+                        icon: const Icon(Icons.image),
+                        label: const Text("GALLERY")),
+                    ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 184, 151, 192)),
+                        onPressed: () {
+                          provider.pickImageFromCam();
+                        },
+                        icon: const Icon(Icons.camera_alt),
+                        label: const Text("CAMERA")),
+                  ],
+                ),
+                const Gap(30),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        FormFieldBuild(
+                            controller: provider.nameContrl..text = name,
+                            hintText: 'NAME'),
+                        FormFieldBuild(
+                            controller: provider.modelContrl,
+                            hintText: 'MODEL'),
+                      ],
+                    ),
+                    const Gap(7),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        FormFieldBuild(
+                            controller: provider.kmContrl..text = km,
+                            hintText: 'KM'),
+                        FormFieldBuild(
+                            controller: provider.dlNumberContrl..text = dlnbr,
+                            hintText: 'DL NUMBER'),
+                      ],
+                    ),
+                    const Gap(7),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        FormFieldBuild(
+                            controller: provider.ownerContrl..text = owner,
+                            hintText: 'OWNERSHIP'),
+                        FormFieldBuild(
+                            controller: provider.priceContrl..text = price,
+                            hintText: 'PRICE'),
+                      ],
+                    ),
+                    const Gap(7),
+                    FormFieldBuild(
+                        controller: provider.futureContrl..text = future,
+                        hintText: 'FUETERS'),
+                  ],
+                ),
+                const Gap(30),
+                ElevatedButton(
+                    onPressed: () {
+                      provider.updateAll(
+                          name: name,
+                          model: model,
+                          km: km,
+                          dlnbr: dlnbr,
+                          owner: owner,
+                          price: price,
+                          future: future,
+                          imagepath: imagepath,
+                          index: index);
+                      Navigator.pop(context);
+                    },
+                    child: const Text('SUBMIT'))
+              ],
             ),
           ),
-        ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const Gap(20),
-              _buildImagePreview(),
-              const Gap(20),
-              const Text('EDIT CAR PHOTO'),
-              _buildImageButtons(),
-              const Gap(30),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FormFieldBuild(
-                          controller: nameController, hintText: 'NAME'),
-                      FormFieldBuild(
-                          controller: modelController, hintText: 'MODEL'),
-                    ],
-                  ),
-                  const Gap(7),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FormFieldBuild(controller: kmController, hintText: 'KM'),
-                      FormFieldBuild(
-                          controller: dlNumberController,
-                          hintText: 'DL NUMBER'),
-                    ],
-                  ),
-                  const Gap(7),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FormFieldBuild(
-                          controller: ownerController, hintText: 'OWNERSHIP'),
-                      FormFieldBuild(
-                          controller: priceController, hintText: 'PRICE'),
-                    ],
-                  ),
-                  const Gap(7),
-                  FormFieldBuild(
-                      controller: futureController, hintText: 'FUETERS'),
-                ],
-              ),
-              const Gap(30),
-              ElevatedButton(
-                onPressed: () {
-                  _updateAll();
-                  Navigator.pop(context);
-                },
-                child: const Text('SUBMIT'),
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      }),
     );
-  }
-
-  Widget _buildImagePreview() {
-    return Center(
-      child: SizedBox(
-        width: 200,
-        height: 200,
-        child: CircleAvatar(
-          backgroundColor: const Color.fromARGB(255, 25, 25, 81),
-          backgroundImage: _selectedImage != null
-              ? FileImage(_selectedImage!)
-              : const AssetImage("image/rolss.png") as ImageProvider,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildImageButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 161, 133, 168),
-          ),
-          onPressed: _pickImgGallery,
-          icon: const Icon(Icons.image),
-          label: const Text("GALLERY"),
-        ),
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 184, 151, 192),
-          ),
-          onPressed: _pickImageFromCam,
-          icon: const Icon(Icons.camera_alt),
-          label: const Text("CAMERA"),
-        ),
-      ],
-    );
-  }
-
-  void _updateAll() {
-    final name = nameController.text;
-    final model = modelController.text;
-    final km = kmController.text;
-    final dlNumber = dlNumberController.text;
-    final owner = ownerController.text;
-    final price = priceController.text;
-    final future = futureController.text;
-    final image = _selectedImage!.path;
-
-    if (name.isEmpty ||
-        model.isEmpty ||
-        km.isEmpty ||
-        dlNumber.isEmpty ||
-        owner.isEmpty ||
-        price.isEmpty ||
-        future.isEmpty ||
-        image.isEmpty) {
-      return;
-    } else {
-      final update = LowCarsModel(
-        name: name,
-        model: model,
-        km: km,
-        dlnumber: dlNumber,
-        owner: owner,
-        price: price,
-        future: future,
-        image: image,
-      );
-
-      editCar(DataBases.LowDb, widget.index, update);
-    }
-  }
-
-  Future<void> _pickImgGallery() async {
-    final returnImg =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (returnImg == null) {
-      return;
-    }
-    setState(() {
-      _selectedImage = File(returnImg.path);
-    });
-  }
-
-  Future<void> _pickImageFromCam() async {
-    final returnImage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-
-    if (returnImage == null) {
-      return;
-    }
-    setState(() {
-      _selectedImage = File(returnImage.path);
-    });
   }
 }

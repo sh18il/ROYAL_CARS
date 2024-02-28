@@ -3,9 +3,11 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:royalcars/controller/add_car_provider.dart';
 import 'package:royalcars/controller/cred_provider.dart';
+import 'package:royalcars/controller/low_controller/edit_low_provider.dart';
 import 'package:royalcars/controller/low_controller/search_provider.dart';
 import 'package:royalcars/controller/luxury_controller/edit_luxury_provider.dart';
 import 'package:royalcars/controller/luxury_controller/searchprovider.dart';
+import 'package:royalcars/controller/medium_controller/edit_medium_provider.dart';
 import 'package:royalcars/controller/medium_controller/search_provider.dart';
 import 'package:royalcars/controller/settings_provider.dart';
 import 'package:royalcars/model/luxurycar/cars_model.dart';
@@ -56,6 +58,12 @@ class MyApp extends StatelessWidget {
         ),
          ChangeNotifierProvider(
           create: (context) => SettingsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MediumLuxuryProvider(),
+        ),
+          ChangeNotifierProvider(
+          create: (context) => EditLowProvider(),
         ),
       ],
       child: MaterialApp(
