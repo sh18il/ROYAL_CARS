@@ -44,7 +44,7 @@ class EditLuxuryProvider extends ChangeNotifier {
     required String owner,
     required String price,
     required String future,
-    required String imagepath,
+    required dynamic imagepath,
     required int index,
   }) async {
     final namelx = nameContrl.text.isEmpty ? name : nameContrl.text;

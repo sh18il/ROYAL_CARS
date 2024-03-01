@@ -6,13 +6,11 @@ class ChartProvider extends ChangeNotifier {
   late double totallaxurycars;
   late double totalLowcars;
 
-   updateValues() {
+  updateValues() {
     totalmediumcars = Chartfucntion.totalMedi;
     totallaxurycars = Chartfucntion.totals;
     totalLowcars = Chartfucntion.totalLow;
 
-    notifyListeners();
+    
   }
-
-  
 }

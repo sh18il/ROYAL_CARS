@@ -15,6 +15,7 @@ class Singin extends StatelessWidget {
   Widget build(BuildContext context) {
     final usernameCntrl = TextEditingController();
     final passwordCntrl = TextEditingController();
+    // ignore: non_constant_identifier_names
     final _SINGUPkey = GlobalKey<FormState>();
     void chekLogin(context) async {
       final username2 = usernameCntrl.text;

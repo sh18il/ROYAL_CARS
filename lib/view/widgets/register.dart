@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 
 import 'sign_in.dart';
 
+// ignore: constant_identifier_names
 const SAVE_KEY = 'usrLogedin';
 
 
@@ -13,6 +14,7 @@ class RegisterScreen extends StatelessWidget {
 
   final passwordCntr = TextEditingController();
 
+  // ignore: non_constant_identifier_names
   final _SINGUPkey = GlobalKey<FormState>();
 
   @override
@@ -104,7 +106,7 @@ class RegisterScreen extends StatelessWidget {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) => Singin(
-                                      username: usernameCntr.text,
+                                       username: usernameCntr.text,
                                       passwoed: passwordCntr.text)));
                         }
                       },

@@ -59,7 +59,7 @@ class ViewLowCars extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('CarName :'),
@@ -74,7 +74,7 @@ class ViewLowCars extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('MODEL :'),
@@ -95,7 +95,7 @@ class ViewLowCars extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('KM :'),
@@ -110,7 +110,7 @@ class ViewLowCars extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('DL NUMBER :'),
@@ -131,7 +131,7 @@ class ViewLowCars extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('OWNER :'),
@@ -146,7 +146,7 @@ class ViewLowCars extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('PRICE :'),

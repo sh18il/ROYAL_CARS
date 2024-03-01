@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:royalcars/controller/add_car_provider.dart';
 import 'package:royalcars/model/luxurycar/cars_model.dart';
 import 'package:royalcars/model/mediumcar/medium_cars_model.dart';
 import 'package:royalcars/model/lowcar/low_cars_model.dart';
-import 'package:royalcars/view/add_screen.dart';
 List<CarsModel> carsListNotifier =[];
 List<LowCarsModel> carsLowListNotifier =[];
 List<MediumCarsModel> carsMediumListNotifier = [];

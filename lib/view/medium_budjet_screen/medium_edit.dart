@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:royalcars/controller/medium_controller/edit_medium_provider.dart';
 
+import '../../controller/medium_controller/search_provider.dart';
 import '../widgets/editpage.dart';
 
 class MediumEditScreen extends StatelessWidget {
@@ -147,6 +148,8 @@ class MediumEditScreen extends StatelessWidget {
                           imagepath: imagepath,
                           index: index);
                       Navigator.pop(context);
+                      Provider.of<MediumCarsProvider>(context, listen: false)
+                          .updateSearchedList('');
                     },
                     child: const Text('SUBMIT'))
               ],

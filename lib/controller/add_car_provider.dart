@@ -7,6 +7,7 @@ import 'dart:io';
 
 import 'package:royalcars/service/function.dart';
 
+// ignore: constant_identifier_names
 enum DataBases { LuxuryDb, MediumDb, LowDb }
 
 class AddCarProvider extends ChangeNotifier {
@@ -133,7 +134,8 @@ class AddCarProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Clear() {
+  // ignore: non_constant_identifier_names
+   Clear() {
     nameContrl.clear();
 
     modelContrl.clear();
@@ -146,5 +148,6 @@ class AddCarProvider extends ChangeNotifier {
     priceContrl.clear();
 
     futureContrl.clear();
+    selectedImage == null;
   }
 }

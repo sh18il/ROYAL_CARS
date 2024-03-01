@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:royalcars/controller/low_controller/edit_low_provider.dart';
 import 'package:royalcars/view/widgets/editpage.dart';
 
-// ignore: must_be_immutablemj
+import '../../controller/low_controller/search_provider.dart';
+
+// ignore: must_be_immutablemj, must_be_immutable
 class EditLowCarScreen extends StatelessWidget {
   String name;
   String model;
@@ -146,6 +148,8 @@ class EditLowCarScreen extends StatelessWidget {
                           imagepath: imagepath,
                           index: index);
                       Navigator.pop(context);
+                         Provider.of<LowCarsProvider>(context, listen: false)
+                  .updateSearchedList('');
                     },
                     child: const Text('SUBMIT'))
               ],

@@ -1,11 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:royalcars/controller/luxury_controller/edit_luxury_provider.dart';
-import 'package:royalcars/model/luxurycar/cars_model.dart';
-import 'package:royalcars/service/function.dart';
+import 'package:royalcars/controller/luxury_controller/searchprovider.dart';
+
 import 'package:royalcars/view/widgets/editpage.dart';
 
 class EditLuxury extends StatelessWidget {
@@ -57,7 +55,7 @@ class EditLuxury extends StatelessWidget {
               Center(
                 child: SizedBox(
                   height: 200,
-                  child:  Image(
+                  child: Image(
                     image: provider.selectImage != null
                         ? FileImage(provider.selectImage!)
                         : const AssetImage("image/carr1.png") as ImageProvider,
@@ -141,19 +139,21 @@ class EditLuxury extends StatelessWidget {
               const Gap(30),
               ElevatedButton(
                 onPressed: () {
-                 provider.updateAll(
-  name: name,
-  model: model,
-  km: km,
-  dlnbr: dlnbr,
-  owner: owner,
-  price: price,
-  future: future,
-  imagepath: imagepath,
-  index: index,
-);
+                  provider.updateAll(
+                    name: name,
+                    model: model,
+                    km: km,
+                    dlnbr: dlnbr,
+                    owner: owner,
+                    price: price,
+                    future: future,
+                    imagepath: imagepath,
+                    index: index,
+                  );
 
                   Navigator.pop(context);
+                  Provider.of<LuxuryCarsProvider>(context, listen: false)
+                      .updateSearchedList('');
                 },
                 child: const Text('SUBMIT'),
               )

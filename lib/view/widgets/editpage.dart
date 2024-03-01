@@ -33,8 +33,8 @@ class FormFieldBuild extends StatelessWidget {
   }
 }
 
-class addFormFieldW extends StatelessWidget {
-  const addFormFieldW({
+class AddFormFieldW extends StatelessWidget {
+  const AddFormFieldW({
     super.key,
     required this.width,
     required this.keyboardType,

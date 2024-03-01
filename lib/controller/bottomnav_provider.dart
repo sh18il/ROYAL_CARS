@@ -8,12 +8,13 @@ import '../view/settings.dart';
 class BottomNavProvider extends ChangeNotifier {
   int currentIndex = 0;
   final screens = [
-    HomeScreen(),
+    const HomeScreen(),
     AddScrees(),
-    ChartScreen(),
+    const ChartScreen(),
     Settings(),
   ];
  
+  // ignore: non_constant_identifier_names
   UpdateIndex(newIndex) {
    currentIndex = newIndex;
     notifyListeners();

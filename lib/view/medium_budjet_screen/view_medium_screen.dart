@@ -58,13 +58,14 @@ class MediumViewScreen extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('CarName :'),
                                 Text(
                                   name,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 )
                               ],
                             )),
@@ -72,13 +73,14 @@ class MediumViewScreen extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('MODEL :'),
                                 Text(
                                   model,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 )
                               ],
                             )),
@@ -92,13 +94,14 @@ class MediumViewScreen extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('KM :'),
                                 Text(
                                   km,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 )
                               ],
                             )),
@@ -106,13 +109,14 @@ class MediumViewScreen extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('DL NUMBER :'),
                                 Text(
                                   dlnbr,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 )
                               ],
                             )),
@@ -126,13 +130,14 @@ class MediumViewScreen extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('OWNER :'),
                                 Text(
                                   owner,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 )
                               ],
                             )),
@@ -140,13 +145,14 @@ class MediumViewScreen extends StatelessWidget {
                       Card(
                         child: SizedBox(
                             width: 150,
-                            height: 40,
+                            height: 50,
                             child: Column(
                               children: [
                                 const Text('PRICE :'),
                                 Text(
                                   price,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 )
                               ],
                             )),
@@ -163,7 +169,8 @@ class MediumViewScreen extends StatelessWidget {
                             const Text('FUTURE :'),
                             Text(
                               future,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             )
                           ],
                         )),

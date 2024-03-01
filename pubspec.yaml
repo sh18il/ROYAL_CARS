@@ -44,9 +44,11 @@ dependencies:
   pie_chart: ^5.4.0
   provider: ^6.1.1
   shared_preferences: ^2.2.2
+  slideable: ^0.0.2
+  
+ 
 
 dev_dependencies:
-
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^1.0.0
   flutter_test:
@@ -78,12 +80,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: StalinistOne
-  #     fonts:
-  #       - fonts/StalinistOne-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: YatraOne
+      fonts:
+        
+        - asset: assets/fonts/YatraOne-Regular.ttf
+         
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

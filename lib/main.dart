@@ -50,24 +50,25 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AddCarProvider(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => EditLuxuryProvider(),
-        ), ChangeNotifierProvider(
-          create: (context) => mediumCarsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MediumCarsProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => LowCarsProvider(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => SettingsProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => MediumLuxuryProvider(),
         ),
-          ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => EditLowProvider(),
         ),
-          ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => ChartProvider(),
         ),
         ChangeNotifierProvider(
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.fallback(),
+        theme: ThemeData(fontFamily: 'YatraOne'),
         home: const SplashScreen(),
       ),
     );
