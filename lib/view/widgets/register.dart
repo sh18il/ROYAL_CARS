@@ -6,9 +6,8 @@ import 'sign_in.dart';
 // ignore: constant_identifier_names
 const SAVE_KEY = 'usrLogedin';
 
-
 class RegisterScreen extends StatelessWidget {
-   RegisterScreen({super.key});
+  RegisterScreen({super.key});
 
   final usernameCntr = TextEditingController();
 
@@ -106,12 +105,12 @@ class RegisterScreen extends StatelessWidget {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) => Singin(
-                                       username: usernameCntr.text,
+                                      username: usernameCntr.text,
                                       passwoed: passwordCntr.text)));
                         }
                       },
                       child: Container(
-                          width: 50,
+                          width: 60,
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(30),

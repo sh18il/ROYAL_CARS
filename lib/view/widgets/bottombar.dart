@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class BottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('bottom');
+   
     final provider = Provider.of<BottomNavProvider>(context);
     return Scaffold(
       body: provider.screens[provider.currentIndex],

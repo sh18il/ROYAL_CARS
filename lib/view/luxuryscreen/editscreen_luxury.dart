@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +34,8 @@ class EditLuxury extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<EditLuxuryProvider>(context);
+    log('qqqqqq');
+    final provider = Provider.of<EditLuxuryProvider>(context , listen: false);
 
     return Scaffold(
       appBar: AppBar(

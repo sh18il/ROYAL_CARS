@@ -15,7 +15,8 @@ class SettingsProvider extends ChangeNotifier {
 
   Future<void> signOut() async {
     final SharedPreferences _sharedPref = await SharedPreferences.getInstance();
-    await _sharedPref.setBool('SAVE_KEY', false);
+    await _sharedPref.clear();
+    await _sharedPref.setBool('isLoggedIn', false);
 
     _isLoggedIn = false;
     notifyListeners();

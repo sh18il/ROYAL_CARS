@@ -272,4 +272,5 @@ class LuxurycarsScreen extends StatelessWidget {
   }
 
   List<int> sumofLuxury = [];
+ 
 }
