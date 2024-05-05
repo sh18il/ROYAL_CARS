@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     getAllCars(DataBases.LuxuryDb);
     getAllCars(DataBases.MediumDb);
     getAllCars(DataBases.LowDb);
@@ -29,6 +30,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const Gap(20),
+            
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
